@@ -1,88 +1,100 @@
-# Azure AI Solutions Quick Start Template <img src="./utils/images/azure_logo.png" alt="Azure Logo" style="width:30px;height:30px;"/>
+# AOAICapacityChecker <img src="./utils/images/azure_logo.png" alt="Azure Logo" style="width:30px;height:30px;"/>
 
-Welcome to the Azure AI Solutions Quick Start Template! This repository is designed to be a rapid launchpad for your Azure AI projects. Whether you're working in an enterprise or academic environment, this template integrates best practices to ensure a smooth development journey from start to finish.
+![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
+![AI](https://img.shields.io/badge/AI-enthusiast-7F52FF.svg)
+![GitHub stars](https://img.shields.io/github/stars/pablosalvador10/gbbai-azure-ai-capacity?style=social)
+![Issues](https://img.shields.io/github/issues/pablosalvador10/gbbai-azure-ai-capacity)
+![License](https://img.shields.io/github/license/pablosalvador10/gbbai-azure-ai-capacity)
 
-## 💼 Using this Template: Your Gateway to Advanced AI Development & Collaboration!
+The **AOAICapacityChecker** project interacts with the Azure OpenAI Service to check and monitor model capacities. It retrieves model capacity data, checks availability in specific regions, and provides outputs in both tabular and graphical formats.
 
-- **🔄 Development Workflow**: Get to know our optimized workflow, designed to foster effective collaboration and a focus on product-centric development. See our [CONTRIBUTING GUIDE](./CONTRIBUTING.md) for more details.
+## 💻 Running the Code
 
-- **🚀 Advanced AI Development Process**: Understand the specifics of managing Azure AI projects, from issue reporting to pull requests, while adhering to best practices in advanced feature development and complex system troubleshooting.
+It is recommended to use a Conda environment for dependency management. You can create the environment using the following command:
 
-- **🔍 Testing & QA for AI Systems**: Learn about the importance of rigorous testing in AI projects and discover efficient development and testing techniques tailored for AI systems with tools like Jupyter Notebooks and `%%ipytest`.
-
-- **🔢 Version & Branching Strategies for AI Projects**: Get to know our versioning system and explore the project’s branching strategy, which ensures smooth transitions between development, staging, and production, especially for AI-driven applications.
-
-- To stay updated with the latest developments and document significant changes to this project, please refer to [CHANGELOG.md](CHANGELOG.md).
-
-## Requirements
-
-> Modify as needed by project 
-
-### Setting Up Azure AI Services
-
-- Azure OpenAI Service: You need to create an Azure OpenAI service instance and obtain the API key. [start here](https://learn.microsoft.com/en-us/azure/ai-services/openai/)
-- Azure Speech AI Service: Required for speech-to-text conversion. Set up the service and get the subscription key and region. [start here](https://azure.microsoft.com/en-us/products/ai-services/ai-speech)
-- Azure Language Service: Necessary for language understanding and intent recognition.[start here](https://azure.microsoft.com/en-us/products/ai-services/ai-language)
-
-### Configuration Env variables
-
-We will now use environment variables to store our configuration. This is a more secure practice as it prevents sensitive data from being accidentally committed and pushed to version control systems.
-
-Create a `.env` file in your project root and add the following variables:
-
-```env
-# Your Azure Speech Service subscription key
-SPEECH_KEY=<Your_Azure_Speech_Service_Subscription_Key>
-
-# Your Azure Speech Service region
-SPEECH_REGION=<Your_Azure_Speech_Service_Region>
-
-# Your Azure Machine Learning workspace key
-INTENT_KEY=<Your_Azure_Machine_Learning_Workspace_Key>
-
-# Your Azure OpenAI API key
-OPENAI_KEY=<Your_Azure_OpenAI_API_Key>
-
-# The model used for chat
-CHAT_MODEL=<Your_Chat_Model>
-
-# The model used for completions
-COMPLETION_MODEL=<Your_Completion_Model>
-
-# The base URL for the OpenAI API
-OPENAI_API_BASE=<Your_OpenAI_API_Base_URL>
-
-# The version of the OpenAI API
-OPENAI_API_VERSION=<Your_OpenAI_API_Version>
-
-# Your Azure Storage connection string
-AZURE_STORAGE_CONNECTION_STRING=<Your_Azure_Storage_Connection_String>
-``` 
-
-`SPEECH_KEY` and `SPEECH_REGION` are used for the Azure Speech Service.
-`INTENT_KEY` is used for the Azure Machine Learning workspace.
-`OPENAI_KEY`, `CHAT_MODEL`, `COMPLETION_MODEL`, `OPENAI_API_BASE`, and `OPENAI_API_VERSION` are used for the Azure OpenAI API.
-`AZURE_STORAGE_CONNECTION_STRING` is used for Azure Storage.
-
-> 📌 Note Remember not to commit the .env file to your version control system. Add it to your .gitignore file to prevent it from being tracked.
-
-## 🌲 Project Tree Structure
-
-```markdown
-📂 gbbai-azure-ai-template
-┣ 📂 notebooks <- For development, EDA, and quick testing (Jupyter notebooks for analysis and development).
-┣ 📂 src <- Houses main source code for data processing, feature engineering, modeling, inference, and evaluation.
-┣ 📂 test <- Runs unit and integration tests for code validation and QA.
-┣ 📂 utils <- Contains utility functions and shared code used throughout the project.
-┣ 📜 .env.sample <- Sample environment variables file. Replace with your own.
-┣ 📜 .pre-commit-config.yaml <- Config for pre-commit hooks ensuring code quality and consistency.
-┣ 📜 01-workshop.ipynb <- Jupyter notebook for the workshop.
-┣ 📜 CHANGELOG.md <- Logs project changes, updates, and version history.
-┣ 📜 USAGE.md <- Guidelines for using this template.
-┣ 📜 environment.yaml <- Conda environment configuration.
-┣ 📜 Makefile <- Simplifies common development tasks and commands.
-┣ 📜 pyproject.toml <- Configuration file for build system requirements and packaging-related metadata.
-┣ 📜 README.md <- Overview, setup instructions, and usage details of the project.
-┣ 📜 requirements-codequality.txt <- Requirements for code quality tools and libraries.
-┣ 📜 requirements.txt <- General project dependencies.
+```bash
+conda env create -f environment.yaml
 ```
+
+```bash
+conda activate aoai-capacity-checker
+```
+
+To check the model/s capacity, follow these steps:
+
+```python
+from aoai_capacity_checker import AOAICapacityChecker
+
+# Initialize the capacity checker
+checker = AOAICapacityChecker(subscription_id="your-subscription-id")
+```
+
+`AOAICapacityChecker` is a Pythonic, easy-to-use class that wraps the API to provide a convenient interface and an intuitive SDK. 
+
+### Key Features:
+- **Flexibility**: Allows filtering by model name, version, SKUs, and regions.
+- **Detailed Output**: Provides a comprehensive dictionary with availability status, SKU-region combinations, timestamp, and detailed capacity information.
+- **Customizable**: Supports checking both available and fine-tuned capacities.
+
+For example, let's say you are looking to check the real-time capacity for a particular model, region, and version under your subscription. The `check_capacity` function verifies if the available or fine-tuned capacity for a specified model and version meets the required capacity. It allows filtering by SKUs and regions and returns a structured dictionary with detailed information.
+
+```python
+# Check model capacity with the following parameters
+result = aoai_capacity_checker.check_capacity(
+    model_name="gpt-4o-mini",
+    model_version="2024-07-18",
+    required_capacity=25,
+    skus="ProvisionedManaged",
+    regions=["brazilsouth", "eastus2", "swedencentral"],
+)
+
+print(result)
+```
+
+#### Returns:
+A dictionary with:
+- **availability**: Boolean indicating if the required capacity is met.
+- **sku_regions**: List of SKU and region combinations that meet the required capacity.
+- **timestamp**: Timestamp of the last update.
+- **details**: Detailed information about the capacity in each region.
+
+```json
+{
+    "availability": true,
+    "sku_regions": {
+        "ProvisionedManaged": [
+            "swedencentral"
+        ]
+    },
+    "timestamp": "2024-09-05 16:04:25 UTC",
+    "details": [
+        {
+            "sku": "ProvisionedManaged",
+            "region": "brazilsouth",
+            "available_capacity": 11,
+            "fine_tuned_capacity": 0,
+            "meets_required_capacity": false
+        },
+        {
+            "sku": "ProvisionedManaged",
+            "region": "eastus2",
+            "available_capacity": 0,
+            "fine_tuned_capacity": 0,
+            "meets_required_capacity": false
+        },
+        {
+            "sku": "ProvisionedManaged",
+            "region": "swedencentral",
+            "available_capacity": 100,
+            "fine_tuned_capacity": 0,
+            "meets_required_capacity": true
+        }
+    ]
+}
+```
+
+For a step-by-step guide on how to run the code, refer to the [Jupyter Notebook](./aoai-checker-sdk.ipynb) in this repository.
+
+### Disclaimer
+> [!IMPORTANT]
+> This software is provided for demonstration purposes only. It is not intended to be relied upon for any purpose. The creators of this software make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the software or the information, products, services, or related graphics contained in the software for any purpose. Any reliance you place on such information is therefore strictly at your own risk.

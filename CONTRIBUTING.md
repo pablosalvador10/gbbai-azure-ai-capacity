@@ -8,12 +8,6 @@
    - [Update Requirements and Document Changes](#update-requirements-and-document-changes)
    - [Commit and Push Your Changes](#commit-and-push-your-changes)
    - [Creating Pull request](#creating-pull-request)
-2. [Additional Setup Steps](#additional-setup-steps)
-   - [Setting Up VSCode for Jupyter Notebooks](#setting-up-vscode-for-jupyter-notebooks)
-   - [Configuring Pre-commit Hooks](#configuring-pre-commit-hooks)
-3. [Development Tips](#development-tips)
-   - [Benefits of Committing to Testing Early](#benefits-of-committing-to-testing-early)
-   - [Utilizing Jupyter Notebooks with %%ipytest for Interactive Testing](#utilizing-jupyter-notebooks-with-ipytest-for-interactive-testing)
 
 
 ## Suggested Workflow for an Effective Development Process 🚀
@@ -159,69 +153,4 @@ git push origin YourBranchName
 
 For more information on creating pull requests, refer to this [GitHub documentation on pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
-## Additional Setup Steps (Optional)
 
-### Setting Up VSCode for Jupyter Notebooks
-
-a. **Install Required Extensions**: Download and install the `Python` and `Jupyter` extensions for VSCode. These extensions provide support for running and editing Jupyter Notebooks within VSCode.
-
-b. **Open the Notebook**: Open the Jupyter Notebook file (`01-indexing-content.ipynb`) in VSCode.
-
-c. **Attach Kernel to VSCode**: After creating the Conda environment, it should be available in the kernel selection dropdown. This dropdown is located in the top-right corner of the VSCode interface. Select your newly created environment (`vector-indexing-azureaisearch`) from the dropdown. This sets it as the kernel for running your Jupyter Notebooks.
-
-d. **Run the Notebook**: Once the kernel is attached, you can run the notebook by clicking on the "Run All" button in the top menu, or by running each cell individually.
-
-### Configuring Pre-commit Hooks
-
-a. **Setup Hooks for Code Quality Assurance**: Run the following command to set up various hooks to ensure code quality, including `flake8`, `mypy`, `isort`, `black`, `check-yaml`, `end-of-file-fixer`, and `trailing-whitespace`.
-
-```bash
-make set_up_precommit_and_prepush
-```
-
-## Development Tips
-
-This section provides guidance for the development phase of the Software Testing Lifecycle (STLC). It focuses on the iterative cycle between development and testing, crucial for identifying and resolving issues during the early stages of software development.
-
-### Benefits of Committing to Testing Early
-
-Committing to testing early in the development process, even during fast, iterative cycles, offers several advantages:
-- Quick identification and resolution of bugs and defects.
-- Improved code reliability and maintainability.
-- Enhanced understanding of the code's behavior and performance.
-
-### Utilizing Jupyter Notebooks with %%ipytest for Interactive Testing
-
-For rapid development and testing, Jupyter Notebooks offer a convenient and interactive environment. Here’s a practical trick for fast development using Jupyter Notebooks:
-
-1. Write your function within a Jupyter Notebook cell.
-2. Use the `%%ipytest` magic command to quickly test the function within the notebook environment.
-
-Suppose you are developing a function `add_numbers`:
-
-```python
-def add_numbers(a, b):
-    """
-    This function adds two numbers.
-
-    Parameters:
-    a (int or float): The first number.
-    b (int or float): The second number.
-
-    Returns:
-    int or float: The sum of a and b.
-    """
-    return a + b
-```
-You can quickly test this function using %%ipytest within a Jupyter Notebook cell:
-
-```python
-
-%%ipytest
-def test_add_numbers():
-    assert add_numbers(1, 2) == 3
-    assert add_numbers(-1, 1) == 0
-    assert add_numbers(0, 0) == 0
-```
-
-> %%ipytest is a cell magic command in Jupyter that allows for running tests in isolation and displaying the results inline, offering immediate feedback. This approach is valuable when building functions incrementally, as it allows for immediate testing and validation. It's particularly useful for testing data transformations and algorithms during the early stages of development.
